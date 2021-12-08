@@ -21,4 +21,4 @@ This uses express (server library), dotenv, cors (to allow users to access serve
 12-07-2021 4:05pm - Application now has a fully-functional express server, with a GET route for the location resource.
 
 ## Credit and Collaborations
-Sara Russert helped a ton with understanding the correct way to format my GET url, as well as sifting through the .json and finding the data I was querying for.
+Sara Russert - helped a ton with understanding the correct way to format my GET url, as well as sifting through the .json and finding the data I was querying for.
