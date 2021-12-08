@@ -4,7 +4,8 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const weatherData = require('./data/weather.json')
+const { default: axios } = require('axios');
+// const weatherData = require('./data/weather.json')
 const app = express();
 
 app.use(cors());
@@ -15,15 +16,17 @@ app.get('/test', function (request, response) {
     response.send('test works');
 })
 
-app.get('/weather-data', function getWeatherData(request, response) {
-    let queriedData = weatherData.find(city => city.city_name.toLowerCase() === request.query.city_name.toLowerCase());
-    if (queriedData) {
-        let finalClientData = queriedData.data.map(dataPoint => new ReturnData(dataPoint));
-        response.status(200).send(finalClientData);
-    } else {
-        response.status(400).send('no data for that city');
+app.get('/weather-data', async function getWeatherData(request, response) {
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${request.query.lat}&lon=${request.query.lon}&key=${process.env.WEATHER_API_KEY}`
+    try {
+        let weatherData = await axios.get(url);
+        let finalClientData = weatherData.data.data.map(dataPoint => new ReturnData(dataPoint));
+        response.send(finalClientData);
+    } catch (e) {
+        console.log(e);
+        response.status(500).send('server error');
     }
-})
+});
 
 app.get('/*', function (request, response) {
     response.status(404).send('error loading request');
