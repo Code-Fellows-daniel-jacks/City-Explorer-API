@@ -18,12 +18,12 @@ app.get('/test', function (request, response) {
 class ReturnData {
     constructor(serverSideData) {
         this.date = serverSideData.datetime,
-            this.desc = serverSideData.weather.description
+            this.desc = `High: ${serverSideData.max_temp}°C Low: ${serverSideData.low_temp}°C, with ${serverSideData.weather.description.toLowerCase()}`
     }
 }
 
 app.get('/weather-data', function getWeatherData(request, response) {
-    let queriedData = weatherData.find(city => city.city_name === request.query.city_name);
+    let queriedData = weatherData.find(city => city.city_name.toLowerCase() === request.query.city_name.toLowerCase());
     let finalClientData = queriedData.data.map(dataPoint => new ReturnData(dataPoint));
     response.send(finalClientData);
 })
