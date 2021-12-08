@@ -15,29 +15,17 @@ app.get('/test', function (request, response) {
     response.send('test works');
 })
 
+class ReturnData {
+    constructor(serverSideData) {
+        this.date = serverSideData.datetime,
+            this.desc = serverSideData.weather.description
+    }
+}
 
 app.get('/weather-data', function getWeatherData(request, response) {
-    response.send(weatherData[0]);
+    let queriedData = weatherData.find(city => city.city_name === request.query.city_name);
+    let finalClientData = queriedData.data.map(dataPoint => new ReturnData(dataPoint));
+    response.send(finalClientData);
 })
-
-// class LocationData {
-//     constructor(obj) {
-//         this.searchQuery = obj.
-//             this.lat = obj.data
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(PORT, () => console.log('server is listening on ', PORT))
