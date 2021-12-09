@@ -33,9 +33,7 @@ app.get('/movie-data', async function getMovieData(request, response) {
     const imageUrl = 'https://image.tmdb.org/t/p/original/'
     try {
         let movieData = await axios.get(url);
-        console.log(url);
         let finalMovieData = movieData.data.results.map(dataObject => new ReturnMovieData(dataObject, imageUrl));
-        console.log(finalMovieData);
         response.send(finalMovieData);
     } catch (e) {
         console.log(e);
