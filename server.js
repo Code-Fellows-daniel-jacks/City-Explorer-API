@@ -4,7 +4,6 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
 const getWeatherData = require('./routehandlers/weather.js');
 const getMovieData = require('./routehandlers/movie.js');
 const app = express();
